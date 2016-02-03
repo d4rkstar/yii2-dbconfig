@@ -7,7 +7,7 @@
  */
 /** @var $this \yii\web\View */
 use yii\bootstrap\Html;
-use app\components\dbconfig\components\ConfigurationUtils;
+use d4rkstar\dbconfig\components\ConfigurationUtils;
 use yii\helpers\Inflector;
 use yii\bootstrap\Collapse;
 

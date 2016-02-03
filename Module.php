@@ -1,7 +1,7 @@
 <?php
 namespace d4rkstar\dbconfig;
 
-use app\components\dbconfig\components\ConfigurationUtils;
+use d4rkstar\dbconfig\components\ConfigurationUtils;
 use Yii;
 
 /**

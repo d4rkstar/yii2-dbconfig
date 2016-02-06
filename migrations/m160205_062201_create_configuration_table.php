@@ -33,11 +33,10 @@ class m160205_062201_create_configuration_table extends Migration
 
     public function down()
     {
-        echo "m160205_062201_create_configuration_table cannot be reverted.\n";
         $this->execute('SET foreign_key_checks = 0');
         $this->execute('DROP TABLE IF EXISTS `configuration`');
         $this->execute('SET foreign_key_checks = 1;');
-        return false;
+        return true;
     }
 
     /*

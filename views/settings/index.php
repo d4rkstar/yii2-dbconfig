@@ -22,40 +22,54 @@ $this->params['breadcrumbs'][] = $this->title;
 $items = [];
 $isFirst = true;
 ?>
-<p>Click on title to expand configuration item</p>
 <?php
-foreach($params as $group=>$params) {
-    $options = [];
-    /*if ($isFirst) {
-        $options['class'] = 'in';
-        $isFirst = false;
-    }*/
-    $itemBody = '';
-    foreach ($params as $fieldName => $fieldParams) {
-        $itemBody .= ConfigurationUtils::renderField($group, $fieldName, $fieldParams);
+    print Html::tag('h1', Html::encode($this->title));
+    if (!Yii::$app->user->isGuest) {
+        print '&nbsp;' . Html::tag('small',
+            Html::icon('pencil',['class'=>'xs']).
+            Html::a('Manage', \yii\helpers\Url::to('manage'))
+        );
     }
-    $item = [
-        'label'=>Inflector::camel2words($group),
-        'content'=>$itemBody,
-        'contentOptions' => $options,
-    ];
-    $items[] = $item;
-}
-echo Collapse::widget([
-    'items' => $items
-]);
+    ?>
 
 
-?>
-
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <?= Html::submitButton(Yii::t('app','Save settings'), ['class' => 'btn btn-primary']) ?>
-            </div>
-        </div>
-<?php Html::endForm() ?>
 <?php
-$js=<<<EOF
+if (count($params)==0) {
+    print Html::tag('h2', Yii::t('app','No configuration items.'));
+} else {
+    print Html::tag('p', Yii::t('app','Click on the titles to expand.'));
+    foreach ($params as $group => $params) {
+        $options = [];
+        /*if ($isFirst) {
+            $options['class'] = 'in';
+            $isFirst = false;
+        }*/
+        $itemBody = '';
+        foreach ($params as $fieldName => $fieldParams) {
+            $itemBody .= ConfigurationUtils::renderField($group, $fieldName, $fieldParams);
+        }
+        $item = [
+            'label' => Inflector::camel2words($group),
+            'content' => $itemBody,
+            'contentOptions' => $options,
+        ];
+        $items[] = $item;
+    }
+    echo Collapse::widget([
+        'items' => $items
+    ]);
+
+
+    ?>
+
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+            <?= Html::submitButton(Yii::t('app', 'Save settings'), ['class' => 'btn btn-primary']) ?>
+        </div>
+    </div>
+    <?php Html::endForm() ?>
+    <?php
+    $js = <<<EOF
 
     $(":checkbox").on("click", function(event) {
         \$(this).attr('value', this.checked ? 1 : 0)
@@ -67,4 +81,5 @@ $js=<<<EOF
     });
 
 EOF;
-$this->registerJs($js);
+    $this->registerJs($js);
+}

@@ -19,6 +19,9 @@ class ConfigurationObject extends Model {
     public $options;
 
 
-
+    public function __toString()
+    {
+        return $this->value;
+    }
 
 }

@@ -30,7 +30,9 @@ class ConfigurationUtils extends Component {
         if (!array_key_exists($name, $this->params)) {
             return null;
         }
-        return $this->params[$name];
+        $p= $this->params[$name];
+
+        return (is_array($p)) ? (object)$p : $p;
     }
 
     public function saveParameters() {
